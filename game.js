@@ -1,14 +1,14 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-const W = 540;
-const H = 120;
+W = 540;
+H = 120;
 
 canvas.width = W;
 canvas.height = H;
 
 currentLevelIndex = 0;
-level = levels[currentLevelIndex];
+level = null;
 square = null;
 
 const levels = [
@@ -16,14 +16,67 @@ const levels = [
     start: {x: 0, y: 0, w: 90, h: 120},
     end: {x: 450, y: 0, w: 90, h: 120},
     circles: [
-    { x: 135, y: 15, size: 9, dx: 0, dy: 1.5 },
-    { x: 225, y: 45, size: 9, dx: 0, dy: 1.5 },
-    { x: 315, y: 75, size: 9, dx: 0, dy: 1.5 },
-    { x: 405, y: 105, size: 9, dx: 0, dy: 1.5 },
-    { x: 495, y: 135, size: 9, dx: 0, dy: 1.5 },
+    { x: 135, y: 15, size: 9, dx: 0, dy: 1.5, color:"#0000FF"},
+    { x: 225, y: 45, size: 9, dx: 0, dy: 1.5, color:"#0000FF"},
+    { x: 315, y: 75, size: 9, dx: 0, dy: 1.5, color:"#0000FF"},
+    { x: 405, y: 105, size: 9, dx: 0, dy: 1.5, color:"#0000FF"},
+    { x: 495, y: 135, size: 9, dx: 0, dy: 1.5, color:"#0000FF"},
     ],
-    square: null
-  }  
+    areaW: 540,
+    areaH: 120
+  },
+
+  { //level two
+    start: {x: 0, y: 0, w: 90, h: 30},
+    end: {x: 210, y: 240, w: 90, h: 60},
+    circles: [
+    { x: 15, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 45, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 75, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 105, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 135, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 165, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 195, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 225, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+
+    { x: 285, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 255, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 225, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 195, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 165, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 135, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 105, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 75, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+
+
+    { x: 15, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 45, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 75, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 105, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 135, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 165, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 195, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 225, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+
+    { x: 285, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 255, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 225, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 195, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 165, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 135, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 105, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 75, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+
+    { x: 75, y: 255, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 135, y: 285, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+    { x: 195, y: 255, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+
+    { x: 15, y: 285, size: 9, dx: -1, dy: 1, color:"#8400ff"},
+    { x: 150, y: 285, size: 9, dx: 0, dy: 1, color:"#8400ff"}
+    ],
+    areaW: 300,
+    areaH: 300
+  } 
 ]
 
 const keys = {};
@@ -56,16 +109,16 @@ function drawBackground() {
 
 function drawStartPoint() {
   ctx.fillStyle = "#B5FEB4";
-  ctx.fillRect(start.x, start.y, start.w, start.h);
+  ctx.fillRect(level.start.x, level.start.y, level.start.w, level.start.h);
 }
 
 function drawEndPoint() {
   ctx.fillStyle = "#B5FEB4";
-  ctx.fillRect(end.x, end.y, end.w, end.h);
+  ctx.fillRect(level.end.x, level.end.y, level.end.w, level.end.h);
 }
 
 function drawCircles() {
-  for (let circle of circles) {
+  for (let circle of level.circles) {
     ctx.beginPath();
     ctx.lineWidth = 4;
     ctx.arc(circle.x, circle.y, 9, 0, Math.PI * 2);
@@ -75,7 +128,7 @@ function drawCircles() {
 
     ctx.beginPath();
     ctx.arc(circle.x, circle.y, 5, 0, Math.PI * 2);
-    ctx.fillStyle = "blue";
+    ctx.fillStyle = `${circle.color}`;
     ctx.fill();
     ctx.closePath();
   }
@@ -94,10 +147,10 @@ function drawSquare() {
 function update() {
 
   if (!square.dead) {
-    if (keys["ArrowUp"] || keys["w"]) square.y -= 0.9;
-    if (keys["ArrowDown"] || keys["s"]) square.y += 0.9;
-    if (keys["ArrowLeft"] || keys["a"]) square.x -= 0.9;
-    if (keys["ArrowRight"] || keys["d"]) square.x += 0.9;
+    if (keys["ArrowUp"] || keys["w"] || keys["W"]) square.y -= 0.9;
+    if (keys["ArrowDown"] || keys["s"] || keys["S"]) square.y += 0.9;
+    if (keys["ArrowLeft"] || keys["a"] || keys["A"]) square.x -= 0.9;
+    if (keys["ArrowRight"] || keys["d"] || keys["D"]) square.x += 0.9;
 
     square.x = Math.max(0, Math.min(canvas.width - square.size, square.x));
     square.y = Math.max(0, Math.min(canvas.height - square.size, square.y));
@@ -105,10 +158,14 @@ function update() {
     squareHitBoxX = square.x + square.size / 2;
     squareHitBoxY = square.y + square.size / 2;
 
-    for (let circle of circles) {
+    if (squareHitBoxX <= level.end.x + level.end.w + 10 && squareHitBoxX >= level.end.x - 10
+        && squareHitBoxY <= level.end.y + level.end.h + 10 && squareHitBoxY >= level.end.y - 10) {
+          loadLevel(++currentLevelIndex);
+      }
 
-      if (squareHitBoxX <= circle.x + 20 && squareHitBoxX >= circle.x - 20
-        && squareHitBoxY <= circle.y + 20 && squareHitBoxY >= circle.y - 20) {
+    for (let circle of level.circles) {
+      if (squareHitBoxX <= circle.x + 18 && squareHitBoxX >= circle.x - 18
+        && squareHitBoxY <= circle.y + 18 && squareHitBoxY >= circle.y - 18) {
           square.dead = true;
       }
     }
@@ -116,8 +173,8 @@ function update() {
   } else {
     square.fade -= 0.015;
     if (square.fade <= 0) {
-      square.x = start.x + start.w / 2  - 10;
-      square.y = start.y + start.h / 2 - 10;
+      square.x = level.start.x + level.start.w / 2  - 10;
+      square.y = level.start.y + level.start.h / 2 - 10;
       square.fade = 1.0;
       square.dead = false;
     }
@@ -147,6 +204,12 @@ function loadLevel(index) {
     size: 20,
     fade: 1.0
   }
+
+  W = level.areaW;
+  H = level.areaH;
+
+  canvas.width = W;
+  canvas.height = H;
 }
 
 function loop() {
