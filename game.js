@@ -25,10 +25,10 @@ const start = {
 const square = {
   x: start.x + start.w / 2 - 10,
   y: start.y + start.h / 2 - 10,
-  size: 20,
   dead: false,
   squareHitBoxX: 0,
   squareHitBoxY: 0,
+  size: 20,
   fade: 1.0
 };
 
@@ -84,22 +84,18 @@ function drawCircles() {
     ctx.arc(circle.x, circle.y, 9, 0, Math.PI * 2);
     ctx.fillStyle = "black";
     ctx.fill();
-    
     ctx.closePath();
 
     ctx.beginPath();
-    ctx.arc(circle.x, circle.y, 6, 0, Math.PI * 2);
+    ctx.arc(circle.x, circle.y, 5, 0, Math.PI * 2);
     ctx.fillStyle = "blue";
     ctx.fill();
-    
     ctx.closePath();
-    }
+  }
 }
 
 function drawSquare() {
-  square.squareHitBoxX = square.x + square.size / 2;
-  square.squareHitBoxY = square.y + square.size / 2;
-
+  
   ctx.fillStyle = `rgba(255, 0, 0, ${square.fade})`;
   ctx.fillRect(square.x, square.y, square.size, square.size);
 
@@ -108,9 +104,8 @@ function drawSquare() {
   ctx.strokeRect(square.x, square.y, square.size, square.size);
 }
 
-circle_direction = -1;
-
 function update() {
+
   if (!square.dead) {
     if (keys["ArrowUp"] || keys["w"]) square.y -= 0.9;
     if (keys["ArrowDown"] || keys["s"]) square.y += 0.9;
@@ -120,10 +115,13 @@ function update() {
     square.x = Math.max(0, Math.min(canvas.width - square.size, square.x));
     square.y = Math.max(0, Math.min(canvas.height - square.size, square.y));
 
+    squareHitBoxX = square.x + square.size / 2;
+    squareHitBoxY = square.y + square.size / 2;
+
     for (let circle of circles) {
 
-      if (square.squareHitBoxX <= circle.x + 15 && square.squareHitBoxX >= circle.x - 15
-        && square.squareHitBoxY <= circle.y + 15 && square.squareHitBoxY >= circle.y - 15) {
+      if (squareHitBoxX <= circle.x + 20 && squareHitBoxX >= circle.x - 20
+        && squareHitBoxY <= circle.y + 20 && squareHitBoxY >= circle.y - 20) {
           square.dead = true;
       }
     }
