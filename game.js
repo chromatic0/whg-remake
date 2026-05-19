@@ -7,7 +7,6 @@ const H = 120;
 canvas.width = W;
 canvas.height = H;
 
-
 const circles = [
   { x: 135, y: 15, size: 9, dx: 0, dy: 1.5 },
   { x: 225, y: 45, size: 9, dx: 0, dy: 1.5 },
