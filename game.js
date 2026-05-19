@@ -7,37 +7,24 @@ const H = 120;
 canvas.width = W;
 canvas.height = H;
 
-const circles = [
-  { x: 135, y: 15, size: 9, dx: 0, dy: 1.5 },
-  { x: 225, y: 45, size: 9, dx: 0, dy: 1.5 },
-  { x: 315, y: 75, size: 9, dx: 0, dy: 1.5 },
-  { x: 405, y: 105, size: 9, dx: 0, dy: 1.5 },
-  { x: 495, y: 135, size: 9, dx: 0, dy: 1.5 },
-];
+currentLevelIndex = 0;
+level = levels[currentLevelIndex];
+square = null;
 
-const start = {
-  x: 0,
-  y: 0,
-  w: 90,
-  h: 120
-}
-
-const square = {
-  x: start.x + start.w / 2 - 10,
-  y: start.y + start.h / 2 - 10,
-  dead: false,
-  squareHitBoxX: 0,
-  squareHitBoxY: 0,
-  size: 20,
-  fade: 1.0
-};
-
-const end = {
-  x: 450,
-  y: 0,
-  w: 90,
-  h: 120
-}
+const levels = [
+  { //level one
+    start: {x: 0, y: 0, w: 90, h: 120},
+    end: {x: 450, y: 0, w: 90, h: 120},
+    circles: [
+    { x: 135, y: 15, size: 9, dx: 0, dy: 1.5 },
+    { x: 225, y: 45, size: 9, dx: 0, dy: 1.5 },
+    { x: 315, y: 75, size: 9, dx: 0, dy: 1.5 },
+    { x: 405, y: 105, size: 9, dx: 0, dy: 1.5 },
+    { x: 495, y: 135, size: 9, dx: 0, dy: 1.5 },
+    ],
+    square: null
+  }  
+]
 
 const keys = {};
 
@@ -136,7 +123,7 @@ function update() {
     }
   }
 
-  for (let circle of circles) {
+  for (let circle of level.circles) {
       circle.x += circle.dx;
       circle.y += circle.dy;
 
@@ -147,6 +134,19 @@ function update() {
         circle.dy *= -1;
       }
     }
+}
+
+function loadLevel(index) {
+  level = levels[index];
+  currentLevelIndex = index;
+
+  square = {
+    x: level.start.x + level.start.w / 2 - 10,
+    y: level.start.y + level.start.h / 2 - 10,
+    dead: false,
+    size: 20,
+    fade: 1.0
+  }
 }
 
 function loop() {
@@ -160,4 +160,5 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
+loadLevel(0);
 loop();
