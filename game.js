@@ -1,3 +1,6 @@
+const deathSound = new Audio('sound/death.mp3');
+const completeSound = new Audio('sound/complete.mp3');
+
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
@@ -160,12 +163,15 @@ function update() {
 
     if (squareHitBoxX <= level.end.x + level.end.w + 10 && squareHitBoxX >= level.end.x - 10
         && squareHitBoxY <= level.end.y + level.end.h + 10 && squareHitBoxY >= level.end.y - 10) {
+          completeSound.play();
           loadLevel(++currentLevelIndex);
       }
 
     for (let circle of level.circles) {
       if (squareHitBoxX <= circle.x + 18 && squareHitBoxX >= circle.x - 18
         && squareHitBoxY <= circle.y + 18 && squareHitBoxY >= circle.y - 18) {
+
+          deathSound.play();
           square.dead = true;
       }
     }
@@ -223,5 +229,5 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
-loadLevel(0);
+loadLevel(1);
 loop();
