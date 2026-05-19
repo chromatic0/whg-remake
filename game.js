@@ -24,8 +24,8 @@ const start = {
 }
 
 const square = {
-  x: start.x,
-  y: start.y,
+  x: start.x + start.w / 2 - 10,
+  y: start.y + start.h / 2 - 10,
   size: 20,
   dead: false,
   squareHitBoxX: 0,
@@ -113,10 +113,10 @@ circle_direction = -1;
 
 function update() {
   if (!square.dead) {
-    if (keys["ArrowUp"] || keys["w"]) square.y -= 1;
-    if (keys["ArrowDown"] || keys["s"]) square.y += 1;
-    if (keys["ArrowLeft"] || keys["a"]) square.x -= 1;
-    if (keys["ArrowRight"] || keys["d"]) square.x += 1;
+    if (keys["ArrowUp"] || keys["w"]) square.y -= 0.9;
+    if (keys["ArrowDown"] || keys["s"]) square.y += 0.9;
+    if (keys["ArrowLeft"] || keys["a"]) square.x -= 0.9;
+    if (keys["ArrowRight"] || keys["d"]) square.x += 0.9;
 
     square.x = Math.max(0, Math.min(canvas.width - square.size, square.x));
     square.y = Math.max(0, Math.min(canvas.height - square.size, square.y));
@@ -127,7 +127,19 @@ function update() {
         && square.squareHitBoxY <= circle.y + 15 && square.squareHitBoxY >= circle.y - 15) {
           square.dead = true;
       }
+    }
 
+  } else {
+    square.fade -= 0.015;
+    if (square.fade <= 0) {
+      square.x = start.x + start.w / 2  - 10;
+      square.y = start.y + start.h / 2 - 10;
+      square.fade = 1.0;
+      square.dead = false;
+    }
+  }
+
+  for (let circle of circles) {
       circle.x += circle.dx;
       circle.y += circle.dy;
 
@@ -138,16 +150,6 @@ function update() {
         circle.dy *= -1;
       }
     }
-
-  } else {
-    square.fade -= 0.015;
-    if (square.fade <= 0) {
-      square.x = start.x;
-      square.y = start.y;
-      square.fade = 1.0;
-      square.dead = false;
-    }
-  }
 }
 
 function loop() {
