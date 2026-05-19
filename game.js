@@ -8,13 +8,6 @@ canvas.width = W;
 canvas.height = H;
 
 
-const square = {
-  x: 50,
-  y: 50,
-  size: 20,
-  speed: 1.2
-};
-
 const circles = [
   { x: 135, y: 15, size: 9, dx: 0, dy: 1.5 },
   { x: 225, y: 45, size: 9, dx: 0, dy: 1.5 },
@@ -29,6 +22,16 @@ const start = {
   w: 90,
   h: 120
 }
+
+const square = {
+  x: start.x,
+  y: start.y,
+  size: 20,
+  dead: false,
+  squareHitBoxX: 0,
+  squareHitBoxY: 0,
+  fade: 1.0
+};
 
 const end = {
   x: 450,
@@ -76,17 +79,17 @@ function drawEndPoint() {
 }
 
 function drawCircles() {
-  for (let c of circles) {
+  for (let circle of circles) {
     ctx.beginPath();
     ctx.lineWidth = 4;
-    ctx.arc(c.x, c.y, 9, 0, Math.PI * 2);
+    ctx.arc(circle.x, circle.y, 9, 0, Math.PI * 2);
     ctx.fillStyle = "black";
     ctx.fill();
     
     ctx.closePath();
 
     ctx.beginPath();
-    ctx.arc(c.x, c.y, 6, 0, Math.PI * 2);
+    ctx.arc(circle.x, circle.y, 6, 0, Math.PI * 2);
     ctx.fillStyle = "blue";
     ctx.fill();
     
@@ -95,36 +98,54 @@ function drawCircles() {
 }
 
 function drawSquare() {
-  ctx.fillStyle = "rgb(255,0,0)";
+  square.squareHitBoxX = square.x + square.size / 2;
+  square.squareHitBoxY = square.y + square.size / 2;
+
+  ctx.fillStyle = `rgba(255, 0, 0, ${square.fade})`;
   ctx.fillRect(square.x, square.y, square.size, square.size);
 
   ctx.lineWidth = 4;
-  ctx.strokeStyle = "black";
+  ctx.strokeStyle = `rgba(0, 0, 0, ${square.fade})`;
   ctx.strokeRect(square.x, square.y, square.size, square.size);
 }
 
 circle_direction = -1;
 
 function update() {
-  if (keys["ArrowUp"] || keys["w"]) square.y -= square.speed;
-  if (keys["ArrowDown"] || keys["s"]) square.y += square.speed;
-  if (keys["ArrowLeft"] || keys["a"]) square.x -= square.speed;
-  if (keys["ArrowRight"] || keys["d"]) square.x += square.speed;
+  if (!square.dead) {
+    if (keys["ArrowUp"] || keys["w"]) square.y -= 1;
+    if (keys["ArrowDown"] || keys["s"]) square.y += 1;
+    if (keys["ArrowLeft"] || keys["a"]) square.x -= 1;
+    if (keys["ArrowRight"] || keys["d"]) square.x += 1;
 
+    square.x = Math.max(0, Math.min(canvas.width - square.size, square.x));
+    square.y = Math.max(0, Math.min(canvas.height - square.size, square.y));
 
-  square.x = Math.max(0, Math.min(canvas.width - square.size, square.x));
-  square.y = Math.max(0, Math.min(canvas.height - square.size, square.y));
+    for (let circle of circles) {
 
-  for (let c of circles) {
+      if (square.squareHitBoxX <= circle.x + 15 && square.squareHitBoxX >= circle.x - 15
+        && square.squareHitBoxY <= circle.y + 15 && square.squareHitBoxY >= circle.y - 15) {
+          square.dead = true;
+      }
 
-    c.x += c.dx;
-    c.y += c.dy;
+      circle.x += circle.dx;
+      circle.y += circle.dy;
 
-    if (c.x <= c.size || c.x >= canvas.width - c.size) {
-      c.dx *= -1;
+      if (circle.x <= circle.size || circle.x >= canvas.width - circle.size) {
+        circle.dx *= -1;
+      }
+      if (circle.y <= circle.size || circle.y >= canvas.height - circle.size) {
+        circle.dy *= -1;
+      }
     }
-    if (c.y <= c.size || c.y >= canvas.height - c.size) {
-      c.dy *= -1;
+
+  } else {
+    square.fade -= 0.015;
+    if (square.fade <= 0) {
+      square.x = start.x;
+      square.y = start.y;
+      square.fade = 1.0;
+      square.dead = false;
     }
   }
 }
