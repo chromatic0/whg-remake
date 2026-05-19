@@ -16,13 +16,26 @@ const square = {
 };
 
 const circles = [
-
   { x: 135, y: 15, size: 9, dx: 0, dy: 1.5 },
   { x: 225, y: 45, size: 9, dx: 0, dy: 1.5 },
   { x: 315, y: 75, size: 9, dx: 0, dy: 1.5 },
   { x: 405, y: 105, size: 9, dx: 0, dy: 1.5 },
   { x: 495, y: 135, size: 9, dx: 0, dy: 1.5 },
 ];
+
+const start = {
+  x: 0,
+  y: 0,
+  w: 90,
+  h: 120
+}
+
+const end = {
+  x: 450,
+  y: 0,
+  w: 90,
+  h: 120
+}
 
 const keys = {};
 
@@ -38,6 +51,8 @@ window.addEventListener("keyup", (e) => {
 function drawBackground() {
   const tile = 30;
 
+  ctx.clearRect(0, 0, W, H);
+
   for (let y = 0; y < H; y += tile) {
     for (let x = 0; x < W; x += tile) {
       ctx.fillStyle =
@@ -48,6 +63,16 @@ function drawBackground() {
       ctx.fillRect(x, y, tile, tile);
     }
   }
+}
+
+function drawStartPoint() {
+  ctx.fillStyle = "#B5FEB4";
+  ctx.fillRect(start.x, start.y, start.w, start.h);
+}
+
+function drawEndPoint() {
+  ctx.fillStyle = "#B5FEB4";
+  ctx.fillRect(end.x, end.y, end.w, end.h);
 }
 
 function drawCircles() {
@@ -69,11 +94,7 @@ function drawCircles() {
     }
 }
 
-function draw() {
-  ctx.clearRect(0, 0, W, H);
-
-  drawBackground();
-
+function drawSquare() {
   ctx.fillStyle = "rgb(255,0,0)";
   ctx.fillRect(square.x, square.y, square.size, square.size);
 
@@ -110,8 +131,12 @@ function update() {
 
 function loop() {
   update();
-  draw();
+  drawBackground();
+  drawStartPoint();
+  drawEndPoint();
   drawCircles();
+  drawSquare();
+  
   requestAnimationFrame(loop);
 }
 
