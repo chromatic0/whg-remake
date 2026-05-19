@@ -1,5 +1,6 @@
 const deathSound = new Audio('sound/death.mp3');
 const completeSound = new Audio('sound/complete.mp3');
+const coinSound = new Audio('sound/coin.mp3');
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
@@ -25,61 +26,93 @@ const levels = [
     { x: 405, y: 105, size: 9, dx: 0, dy: 1.5, color:"#0000FF"},
     { x: 495, y: 135, size: 9, dx: 0, dy: 1.5, color:"#0000FF"},
     ],
+    coins: [],
     areaW: 540,
-    areaH: 120
+    areaH: 120,
+    color: "#b4b5fe",
+    coinsCollected: 0
   },
 
   { //level two
     start: {x: 0, y: 0, w: 90, h: 30},
     end: {x: 210, y: 240, w: 90, h: 60},
     circles: [
-    { x: 15, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 45, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 75, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 105, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 135, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 165, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 195, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 225, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 15, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 45, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 75, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 105, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 135, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 165, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 195, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 225, y: 45, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
 
-    { x: 285, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 255, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 225, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 195, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 165, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 135, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 105, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 75, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 285, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 255, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 225, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 195, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 165, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 135, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 105, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 75, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
 
 
-    { x: 15, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 45, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 75, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 105, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 135, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 165, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 195, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 225, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 15, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 45, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 75, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 105, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 135, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 165, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 195, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 225, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
 
-    { x: 285, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 255, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 225, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 195, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 165, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 135, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 105, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 75, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 285, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 255, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 225, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 195, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 165, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 135, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 105, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 75, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
 
-    { x: 75, y: 255, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 135, y: 285, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
-    { x: 195, y: 255, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 75, y: 255, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 135, y: 285, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 195, y: 255, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
 
-    { x: 15, y: 285, size: 9, dx: -1, dy: 1, color:"#8400ff"},
-    { x: 150, y: 285, size: 9, dx: 0, dy: 1, color:"#8400ff"}
+      { x: 15, y: 285, size: 9, dx: -1, dy: 1, color:"#0000ff"},
+      { x: 150, y: 285, size: 9, dx: 0, dy: 1, color:"#0000ff"}
     ],
+    coins: [],
     areaW: 300,
-    areaH: 300
-  } 
+    areaH: 300,
+    color: "#b4b5fe",
+    coinsCollected: 0
+  },
+
+  { //level three
+    start: {x: 0, y: 0, w: 60, h: 60},
+    end: {x: 150, y: 150, w: 60, h: 60},
+    circles: [
+      { x: 135, y: 75, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 195, y: 75, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+
+      { x: 75, y: 135, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 75, y: 195, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+
+      { x: 75, y: 15, size: 9, dx: 0, dy: 2.5, color:"#0000FF"},
+      { x: 75, y: 15, size: 9, dx: 0, dy: 0.5, color:"#0000FF"},
+
+      { x: 75, y: 75, size: 9, dx: 2.5, dy: 0, color:"#0000FF"},
+      { x: 75, y: 75, size: 9, dx: 0.5, dy: 0, color:"#0000FF"}
+    ],
+    coins: [
+      { x: 15, y: 195, size: 9, collected: false},
+      { x: 195, y: 15, size: 9, collected: false}
+    ],
+    areaW: 210,
+    areaH: 210,
+    color: "#b4b5fe",
+    coinsCollected: 0
+  },
 ]
 
 const keys = {};
@@ -137,6 +170,25 @@ function drawCircles() {
   }
 }
 
+function drawCoins() {
+  for (let coin of level.coins) {
+    if (!coin.collected) {
+      ctx.beginPath();
+      ctx.lineWidth = 4;
+      ctx.arc(coin.x, coin.y, 9, 0, Math.PI * 2);
+      ctx.fillStyle = "black";
+      ctx.fill();
+      ctx.closePath();
+
+      ctx.beginPath();
+      ctx.arc(coin.x, coin.y, 5, 0, Math.PI * 2);
+      ctx.fillStyle = "#ffff00";
+      ctx.fill();
+      ctx.closePath();
+    }
+  }
+}
+
 function drawSquare() {
   
   ctx.fillStyle = `rgba(255, 0, 0, ${square.fade})`;
@@ -161,7 +213,8 @@ function update() {
     squareHitBoxX = square.x + square.size / 2;
     squareHitBoxY = square.y + square.size / 2;
 
-    if (squareHitBoxX <= level.end.x + level.end.w + 10 && squareHitBoxX >= level.end.x - 10
+    if (level.coinsCollected == level.coins.length
+        && squareHitBoxX <= level.end.x + level.end.w + 10 && squareHitBoxX >= level.end.x - 10
         && squareHitBoxY <= level.end.y + level.end.h + 10 && squareHitBoxY >= level.end.y - 10) {
           completeSound.play();
           loadLevel(++currentLevelIndex);
@@ -170,9 +223,22 @@ function update() {
     for (let circle of level.circles) {
       if (squareHitBoxX <= circle.x + 18 && squareHitBoxX >= circle.x - 18
         && squareHitBoxY <= circle.y + 18 && squareHitBoxY >= circle.y - 18) {
-
           deathSound.play();
           square.dead = true;
+
+          for (let coin of level.coins) {
+            if (coin.collected) {coin.collected = false;}
+            level.coinsCollected = 0;
+          }
+      }
+    
+      for (let coin of level.coins) {
+        if (!coin.collected && squareHitBoxX <= coin.x + 18 && squareHitBoxX >= coin.x - 18
+          && squareHitBoxY <= coin.y + 18 && squareHitBoxY >= coin.y - 18) {
+            coinSound.play();
+            coin.collected = true;
+            level.coinsCollected++;
+        }
       }
     }
 
@@ -216,6 +282,8 @@ function loadLevel(index) {
 
   canvas.width = W;
   canvas.height = H;
+
+  document.body.style.background = `${level.color}`;;
 }
 
 function loop() {
@@ -223,11 +291,12 @@ function loop() {
   drawBackground();
   drawStartPoint();
   drawEndPoint();
+  drawCoins();
   drawCircles();
   drawSquare();
   
   requestAnimationFrame(loop);
 }
 
-loadLevel(1);
+loadLevel(0);
 loop();
