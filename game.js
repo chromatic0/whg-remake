@@ -543,5 +543,5 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
-loadLevel(6);
+loadLevel(0);
 loop();
