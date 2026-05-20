@@ -5,8 +5,9 @@ const coinSound = new Audio('sound/coin.mp3');
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-const Y_OFFSET = 100;
+const Y_OFFSET = 90;
 const X_OFFSET = 200;
+const TILE = 30;
 
 W = null;
 H = null;
@@ -27,10 +28,16 @@ const levels = [
     start: {x: 0, y: 0, w: 90, h: 120},
     end: {x: 450, y: 0, w: 90, h: 120},
     circles: [
-    { x: 135, y: 15, size: 9, dx: 0, dy: 1.5, color:"#0000FF"},
-    { x: 225, y: 45, size: 9, dx: 0, dy: 1.5, color:"#0000FF"},
-    { x: 315, y: 75, size: 9, dx: 0, dy: 1.5, color:"#0000FF"},
-    { x: 405, y: 105, size: 9, dx: 0, dy: 1.5, color:"#0000FF"},
+    { x: 135, y: 15, size: 9, dx: 0, dy: 1.5, minY: 0, maxY: 120, color:"#0000FF"},
+    { x: 225, y: 45, size: 9, dx: 0, dy: 1.5, minY: 0, maxY: 120, color:"#0000FF"},
+    { x: 315, y: 75, size: 9, dx: 0, dy: 1.5, minY: 0, maxY: 120, color:"#0000FF"},
+    { x: 405, y: 105, size: 9, dx: 0, dy: 1.5, minY: 0, maxY: 120, color:"#0000FF"},
+    ],
+    map: [
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     ],
     coins: [],
     areaW: 540,
@@ -84,8 +91,20 @@ const levels = [
       { x: 135, y: 285, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
       { x: 195, y: 255, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
 
-      { x: 15, y: 285, size: 9, dx: -1, dy: 1, color:"#0000ff"},
-      { x: 150, y: 285, size: 9, dx: 0, dy: 1, color:"#0000ff"}
+      { x: 15, y: 285, size: 9, dx: -1, dy: 1, minX: 0, maxX: 300, minY: 0, maxY: 300, color:"#0000ff"},
+      { x: 150, y: 285, size: 9, dx: 0, dy: 1, minY: 0, maxY: 300, color:"#0000ff"}
+    ],
+    map: [
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ],
     coins: [],
     areaW: 300,
@@ -104,18 +123,63 @@ const levels = [
       { x: 75, y: 135, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
       { x: 75, y: 195, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
 
-      { x: 75, y: 15, size: 9, dx: 0, dy: 2.5, color:"#0000FF"},
-      { x: 75, y: 15, size: 9, dx: 0, dy: 0.5, color:"#0000FF"},
+      { x: 75, y: 15, size: 9, dx: 0, dy: 2.5, minY: 0, maxY: 210, color:"#0000FF"},
+      { x: 75, y: 15, size: 9, dx: 0, dy: 0.5, minY: 0, maxY: 210, color:"#0000FF"},
 
-      { x: 75, y: 75, size: 9, dx: 2.5, dy: 0, color:"#0000FF"},
-      { x: 75, y: 75, size: 9, dx: 0.5, dy: 0, color:"#0000FF"}
+      { x: 75, y: 75, size: 9, dx: 2.5, dy: 0, minX: 0, maxX: 210, color:"#0000FF"},
+      { x: 75, y: 75, size: 9, dx: 0.5, dy: 0, minX: 0, maxX: 210, color:"#0000FF"}
     ],
     coins: [
       { x: 15, y: 195, size: 9, collected: false},
       { x: 195, y: 15, size: 9, collected: false}
     ],
+    map: [
+      [1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1],
+    ],
     areaW: 210,
     areaH: 210,
+    color: "#b4b5fe",
+    coinsCollected: 0
+  },
+
+  { //level four
+    start: {x: 0, y: 30, w: 60, h: 120},
+    end: {x: 570, y: 30, w: 60, h: 120},
+    circles: [
+      { x: 135, y: 45, size: 9, dx: 0, dy: 0.5, minY: 0, maxY: 90, color:"#0000FF"},
+      { x: 225, y: 135, size: 9, dx: 1, dy: 0, minX: 150, maxX: 300, color:"#0000FF"},
+      { x: 225, y: 135, size: 9, dx: 0, dy: -0.5, minY: 90, maxY: 180, color:"#0000FF"},
+      { x: 315, y: 45, size: 9, dx: -1.5, dy: 0, minX: 240, maxX: 390, color:"#0000FF"},
+      { x: 315, y: 45, size: 9, dx: 0, dy: 0.5, minY: 0, maxY: 90, color:"#0000FF"},
+      { x: 405, y: 135, size: 9, dx: -1, dy: 0, minX: 330, maxX: 480, color:"#0000FF"},
+      { x: 405, y: 135, size: 9, dx: 0, dy: -0.5, minY: 90, maxY: 180, color:"#0000FF"},
+      { x: 495, y: 45, size: 9, dx: 0, dy: 0.5, minY: 0, maxY: 90, color:"#0000FF"},
+    ],
+    coins: [
+      { x: 165, y:165, size: 9, collected: false},
+      { x: 285, y:165, size: 9, collected: false},
+      { x: 255, y:15, size: 9, collected: false},
+      { x: 375, y:15, size: 9, collected: false},
+      { x: 345, y:165, size: 9, collected: false},
+      { x: 465, y:165, size: 9, collected: false},
+
+    ],
+    map: [
+      [0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0],
+      [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],
+      [1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],
+      [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+    ],
+    areaW: 600,
+    areaH: 180,
     color: "#b4b5fe",
     coinsCollected: 0
   },
@@ -168,49 +232,42 @@ function drawText() {
 }
 
 function drawBackground() {
-  
-  const tile = 30;
-
-  ctx.clearRect(0, 0, W, H);
-
-  ctx.strokeStyle = "black";
-  ctx.lineWidth = 10;
-  ctx.strokeRect(X_OFFSET/2, Y_OFFSET - 10, W, H);
-
-  for (let y = 0; y < H; y += tile) {
-    for (let x = 0; x < W; x += tile) {
-      ctx.fillStyle =
-        ((x / tile + y / tile) % 2 === 0)
-          ? "#E6E6FF"
-          : "#F7F7FF";
-
-      ctx.fillRect(x + X_OFFSET/2, y + Y_OFFSET - 10, tile, tile);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+ 
+  for (let row = 0; row < level.map.length; row++) {
+    for (let col = 0; col < level.map[0].length; col++) {
+      if (level.map[row][col] == 0) continue;
+      if ((col + row) % 2 === 0) {
+        ctx.fillStyle = "#E6E6FF"
+      } else {
+        ctx.fillStyle = "#F7F7FF"
+      }
+      ctx.fillRect(col * TILE + X_OFFSET/2, row * TILE + Y_OFFSET, TILE, TILE);
     }
   }
-
 }
 
 function drawStartPoint() {
   ctx.fillStyle = "#B5FEB4";
-  ctx.fillRect(level.start.x + X_OFFSET/2, level.start.y + Y_OFFSET - 10, level.start.w, level.start.h);
+  ctx.fillRect(level.start.x + X_OFFSET/2, level.start.y + Y_OFFSET, level.start.w, level.start.h);
 }
 
 function drawEndPoint() {
   ctx.fillStyle = "#B5FEB4";
-  ctx.fillRect(level.end.x + X_OFFSET/2, level.end.y + Y_OFFSET - 10, level.end.w, level.end.h);
+  ctx.fillRect(level.end.x + X_OFFSET/2, level.end.y + Y_OFFSET, level.end.w, level.end.h);
 }
 
 function drawCircles() {
   for (let circle of level.circles) {
     ctx.beginPath();
     ctx.lineWidth = 4;
-    ctx.arc(circle.x + X_OFFSET/2, circle.y + Y_OFFSET - 10, 9, 0, Math.PI * 2);
+    ctx.arc(circle.x + X_OFFSET/2, circle.y + Y_OFFSET, 9, 0, Math.PI * 2);
     ctx.fillStyle = "black";
     ctx.fill();
     ctx.closePath();
 
     ctx.beginPath();
-    ctx.arc(circle.x + X_OFFSET/2, circle.y + Y_OFFSET - 10, 5, 0, Math.PI * 2);
+    ctx.arc(circle.x + X_OFFSET/2, circle.y + Y_OFFSET, 5, 0, Math.PI * 2);
     ctx.fillStyle = `${circle.color}`;
     ctx.fill();
     ctx.closePath();
@@ -222,13 +279,13 @@ function drawCoins() {
     if (!coin.collected) {
       ctx.beginPath();
       ctx.lineWidth = 4;
-      ctx.arc(coin.x + + X_OFFSET/2, coin.y + Y_OFFSET - 10, 9, 0, Math.PI * 2);
+      ctx.arc(coin.x + + X_OFFSET/2, coin.y + Y_OFFSET, 9, 0, Math.PI * 2);
       ctx.fillStyle = "black";
       ctx.fill();
       ctx.closePath();
 
       ctx.beginPath();
-      ctx.arc(coin.x + + X_OFFSET/2, coin.y + Y_OFFSET - 10, 5, 0, Math.PI * 2);
+      ctx.arc(coin.x + + X_OFFSET/2, coin.y + Y_OFFSET, 5, 0, Math.PI * 2);
       ctx.fillStyle = "#ffff00";
       ctx.fill();
       ctx.closePath();
@@ -239,23 +296,48 @@ function drawCoins() {
 function drawSquare() {
   
   ctx.fillStyle = `rgba(255, 0, 0, ${square.fade})`;
-  ctx.fillRect(square.x + X_OFFSET/2, square.y + Y_OFFSET - 10, square.size, square.size);
+  ctx.fillRect(square.x + X_OFFSET/2, square.y + Y_OFFSET, square.size, square.size);
 
   ctx.lineWidth = 4;
   ctx.strokeStyle = `rgba(0, 0, 0, ${square.fade})`;
-  ctx.strokeRect(square.x + X_OFFSET/2, square.y + Y_OFFSET - 10, square.size, square.size);
+  ctx.strokeRect(square.x + X_OFFSET/2, square.y + Y_OFFSET, square.size, square.size);
+}
+
+function isWall(px, py) {
+
+
+  const tx = Math.floor(px / TILE);
+  const ty = Math.floor(py / TILE);
+  if (ty < 0 || ty >= level.map.length) return true;
+  if (tx < 0 || tx >= level.map[0].length) return true;
+  return level.map[ty][tx] === 0;
+}
+ 
+function squareHitsWall(x, y) {
+  const margin = 1;
+  const s = square.size - margin;
+  return (
+    isWall(x + margin, y + margin) ||
+    isWall(x + s, y + margin) ||
+    isWall(x + margin, y + s) ||
+    isWall(x + s, y + s)
+  );
 }
 
 function update() {
 
   if (!square.dead) {
+
+    const prevX = square.x;
+    const prevY = square.y;
+
     if (keys["ArrowUp"] || keys["w"] || keys["W"]) square.y -= 0.9;
     if (keys["ArrowDown"] || keys["s"] || keys["S"]) square.y += 0.9;
     if (keys["ArrowLeft"] || keys["a"] || keys["A"]) square.x -= 0.9;
     if (keys["ArrowRight"] || keys["d"] || keys["D"]) square.x += 0.9;
 
-    square.x = Math.max(0, Math.min(W - square.size, square.x));
-    square.y = Math.max(0, Math.min(H - square.size, square.y));
+    if (squareHitsWall(square.x, prevY)) square.x = prevX;
+    if (squareHitsWall(prevX, square.y)) square.y = prevY;
 
     squareHitBoxX = square.x + square.size / 2;
     squareHitBoxY = square.y + square.size / 2;
@@ -305,10 +387,10 @@ function update() {
       circle.x += circle.dx;
       circle.y += circle.dy;
 
-      if (circle.x <= circle.size || circle.x >= W - circle.size) {
+      if (circle.x <= circle.minX + circle.size || circle.x >= circle.maxX - circle.size) {
         circle.dx *= -1;
       }
-      if (circle.y <= circle.size || circle.y >= H - circle.size) {
+      if (circle.y <= circle.minY + circle.size || circle.y >= circle.maxY - circle.size) {
         circle.dy *= -1;
       }
     }
