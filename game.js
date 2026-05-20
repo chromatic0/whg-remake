@@ -7,6 +7,7 @@ const ctx = canvas.getContext("2d");
 
 const Y_OFFSET = 90;
 const X_OFFSET = 200;
+const HALF_X_OFFSET = X_OFFSET/2;
 const TILE = 30;
 const CIRCLE_SIZE = 9;
 const COIN_SIZE = 9;
@@ -201,7 +202,7 @@ const levels = [
       { x: 165, y: 45, dx: 1.7, dy: 0, minX: 0, maxX: 240, color:"#0000FF"},
       { x: 165, y: 135, dx: 0.5, dy: 0, minX: 150, maxX: 300, color:"#0000FF"},
       { x: 345, y: 15, dx: 0, dy: 0.95, minY: 0, maxY: 240, color:"#0000FF"},
-      { x: 75, y: 195, dx: -1.8, dy: 0., minX: 60, maxX: 300, color:"#0000FF"},
+      { x: 75, y: 195, dx: -1.8, dy: 0, minX: 60, maxX: 300, color:"#0000FF"},
 
     ],
     coins: [
@@ -285,14 +286,14 @@ function drawText() {
   ctx.strokeStyle = "black";
   ctx.lineWidth = 5;
   ctx.lineJoin = "round";
-  ctx.strokeText(`LEVEL ${currentLevelIndex+1}`, W/2 + X_OFFSET/2, 35);
+  ctx.strokeText(`LEVEL ${currentLevelIndex+1}`, W/2 + HALF_X_OFFSET, 35);
   ctx.fillStyle = "white";
-  ctx.fillText(`LEVEL ${currentLevelIndex+1}`, W/2 + X_OFFSET/2, 35);
+  ctx.fillText(`LEVEL ${currentLevelIndex+1}`, W/2 + HALF_X_OFFSET, 35);
 
   ctx.textAlign = "left";
   ctx.font = "24px Oswald";
   const totalWidth = ctx.measureText("DEATHS: ").width + ctx.measureText(deaths).width;
-  const startingX = W/2 + X_OFFSET/2 - totalWidth/2
+  const startingX = W/2 + HALF_X_OFFSET - totalWidth/2
 
   ctx.strokeStyle = "black";
   ctx.lineWidth = 4;
@@ -316,27 +317,27 @@ function drawBackground() {
       } else {
         ctx.fillStyle = "#F7F7FF"
       }
-      ctx.fillRect(col * TILE + X_OFFSET/2, row * TILE + Y_OFFSET, TILE, TILE);
+      ctx.fillRect(col * TILE + HALF_X_OFFSET, row * TILE + Y_OFFSET, TILE, TILE);
     }
   }
 }
 
 function drawStartEndPoints() {
   ctx.fillStyle = "#B5FEB4";
-  ctx.fillRect(level.start.x + X_OFFSET/2, level.start.y + Y_OFFSET, level.start.w, level.start.h);
-  ctx.fillRect(level.end.x + X_OFFSET/2, level.end.y + Y_OFFSET, level.end.w, level.end.h);
+  ctx.fillRect(level.start.x + HALF_X_OFFSET, level.start.y + Y_OFFSET, level.start.w, level.start.h);
+  ctx.fillRect(level.end.x + HALF_X_OFFSET, level.end.y + Y_OFFSET, level.end.w, level.end.h);
 }
 
 function drawCircles() {
   for (let circle of level.circles) {
     ctx.beginPath();
-    ctx.arc(circle.x + X_OFFSET/2, circle.y + Y_OFFSET, CIRCLE_SIZE, 0, Math.PI * 2);
+    ctx.arc(circle.x + HALF_X_OFFSET, circle.y + Y_OFFSET, CIRCLE_SIZE, 0, Math.PI * 2);
     ctx.fillStyle = "black";
     ctx.fill();
     ctx.closePath();
 
     ctx.beginPath();
-    ctx.arc(circle.x + X_OFFSET/2, circle.y + Y_OFFSET, CIRCLE_SIZE - 4, 0, Math.PI * 2);
+    ctx.arc(circle.x + HALF_X_OFFSET, circle.y + Y_OFFSET, CIRCLE_SIZE - 4, 0, Math.PI * 2);
     ctx.fillStyle = circle.color;
     ctx.fill();
     ctx.closePath();
@@ -347,13 +348,13 @@ function drawCoins() {
   for (let coin of level.coins) {
     if (!coin.collected) {
       ctx.beginPath();
-      ctx.arc(coin.x + X_OFFSET/2, coin.y + Y_OFFSET, COIN_SIZE, 0, Math.PI * 2);
+      ctx.arc(coin.x + HALF_X_OFFSET, coin.y + Y_OFFSET, COIN_SIZE, 0, Math.PI * 2);
       ctx.fillStyle = "black";
       ctx.fill();
       ctx.closePath();
 
       ctx.beginPath();
-      ctx.arc(coin.x + X_OFFSET/2, coin.y + Y_OFFSET, COIN_SIZE - 4, 0, Math.PI * 2);
+      ctx.arc(coin.x + HALF_X_OFFSET, coin.y + Y_OFFSET, COIN_SIZE - 4, 0, Math.PI * 2);
       ctx.fillStyle = "#ffff00";
       ctx.fill();
       ctx.closePath();
@@ -363,10 +364,10 @@ function drawCoins() {
 
 function drawSquare() {
   ctx.fillStyle = `rgba(255, 0, 0, ${square.fade})`;
-  ctx.fillRect(square.x + X_OFFSET/2, square.y + Y_OFFSET, SQUARE_SIZE, SQUARE_SIZE);
+  ctx.fillRect(square.x + HALF_X_OFFSET, square.y + Y_OFFSET, SQUARE_SIZE, SQUARE_SIZE);
   ctx.lineWidth = 4;
   ctx.strokeStyle = `rgba(0, 0, 0, ${square.fade})`;
-  ctx.strokeRect(square.x + X_OFFSET/2, square.y + Y_OFFSET, SQUARE_SIZE, SQUARE_SIZE);
+  ctx.strokeRect(square.x + HALF_X_OFFSET, square.y + Y_OFFSET, SQUARE_SIZE, SQUARE_SIZE);
 }
 
 function isWall(px, py) {
@@ -450,10 +451,10 @@ function update() {
     circle.x += circle.dx;
     circle.y += circle.dy;
 
-    if (circle.x <= circle.minX + CIRCLE_SIZE || circle.x >= circle.maxX - CIRCLE_SIZE) {
+    if (circle.dx != 0 && (circle.x <= circle.minX + CIRCLE_SIZE || circle.x >= circle.maxX - CIRCLE_SIZE)) {
       circle.dx *= -1;
     }
-    if (circle.y <= circle.minY + CIRCLE_SIZE || circle.y >= circle.maxY - CIRCLE_SIZE) {
+    if (circle.dy != 0 && (circle.y <= circle.minY + CIRCLE_SIZE || circle.y >= circle.maxY - CIRCLE_SIZE)) {
       circle.dy *= -1;
     }
   }
@@ -464,7 +465,8 @@ function loadLevel(index) {
     index = 0;
     deaths = 0;
   }
-  level = levels[index];
+
+  level = structuredClone(levels[index]);
   currentLevelIndex = index;
 
   square = {
@@ -491,7 +493,7 @@ function loop() {
   drawCircles();
   drawSquare();
   drawText();
-  
+
   requestAnimationFrame(loop);
 }
 
