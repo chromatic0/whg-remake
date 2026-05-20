@@ -12,6 +12,9 @@ const CIRCLE_SIZE = 9;
 const COIN_SIZE = 9;
 const SQUARE_SIZE = 20;
 
+let W = 0;
+let H = 0;
+
 let deaths = 0;
 let currentLevelIndex = 0;
 let level = null;
@@ -143,12 +146,12 @@ const levels = [
       { x: 495, y: 45, dx: 0, dy: 0.5, minY: 0, maxY: 90, color:"#0000FF"},
     ],
     coins: [
-      { x: 165, y:165, collected: false},
-      { x: 285, y:165, collected: false},
-      { x: 255, y:15, collected: false},
-      { x: 375, y:15, collected: false},
-      { x: 345, y:165, collected: false},
-      { x: 465, y:165, collected: false},
+      { x: 165, y: 165, collected: false},
+      { x: 285, y: 165, collected: false},
+      { x: 255, y: 15, collected: false},
+      { x: 375, y: 15, collected: false},
+      { x: 345, y: 165, collected: false},
+      { x: 465, y: 165, collected: false},
 
     ],
     map: [
@@ -298,20 +301,18 @@ function drawText() {
 
   ctx.textAlign = "left";
   ctx.font = "24px Oswald";
-  const p1 = "DEATHS: ";
-  const p2 = `${deaths}`;
-  const totalWidth = ctx.measureText(p1).width + ctx.measureText(p2).width;
+  const totalWidth = ctx.measureText("DEATHS: ").width + ctx.measureText(deaths).width;
   const startingX = W/2 + X_OFFSET/2 - totalWidth/2
 
   ctx.strokeStyle = "black";
   ctx.lineWidth = 4;
   ctx.lineJoin = "round";
-  ctx.strokeText(p1, startingX, 65);
-  ctx.strokeText(p2, startingX + ctx.measureText(p1).width, 65);
+  ctx.strokeText("DEATHS: ", startingX, 65);
+  ctx.strokeText(deaths, startingX + ctx.measureText("DEATHS: ").width, 65);
   ctx.fillStyle = "white";
-  ctx.fillText(p1, startingX, 65);
+  ctx.fillText("DEATHS: ", startingX, 65);
   ctx.fillStyle = "red";
-  ctx.fillText(p2, startingX + ctx.measureText(p1).width, 65);
+  ctx.fillText(deaths, startingX + ctx.measureText("DEATHS: ").width, 65);
   ctx.lineJoin = "miter";
 }
 
@@ -351,7 +352,7 @@ function drawCircles() {
 
     ctx.beginPath();
     ctx.arc(circle.x + X_OFFSET/2, circle.y + Y_OFFSET, CIRCLE_SIZE - 4, 0, Math.PI * 2);
-    ctx.fillStyle = `${circle.color}`;
+    ctx.fillStyle = circle.color;
     ctx.fill();
     ctx.closePath();
   }
@@ -362,13 +363,13 @@ function drawCoins() {
     if (!coin.collected) {
       ctx.beginPath();
       ctx.lineWidth = 4;
-      ctx.arc(coin.x + + X_OFFSET/2, coin.y + Y_OFFSET, COIN_SIZE, 0, Math.PI * 2);
+      ctx.arc(coin.x + X_OFFSET/2, coin.y + Y_OFFSET, COIN_SIZE, 0, Math.PI * 2);
       ctx.fillStyle = "black";
       ctx.fill();
       ctx.closePath();
 
       ctx.beginPath();
-      ctx.arc(coin.x + + X_OFFSET/2, coin.y + Y_OFFSET, COIN_SIZE - 4, 0, Math.PI * 2);
+      ctx.arc(coin.x + X_OFFSET/2, coin.y + Y_OFFSET, COIN_SIZE - 4, 0, Math.PI * 2);
       ctx.fillStyle = "#ffff00";
       ctx.fill();
       ctx.closePath();
@@ -461,16 +462,16 @@ function update() {
   }
 
   for (let circle of level.circles) {
-      circle.x += circle.dx;
-      circle.y += circle.dy;
+    circle.x += circle.dx;
+    circle.y += circle.dy;
 
-      if (circle.x <= circle.minX + CIRCLE_SIZE || circle.x >= circle.maxX - CIRCLE_SIZE) {
-        circle.dx *= -1;
-      }
-      if (circle.y <= circle.minY + CIRCLE_SIZE || circle.y >= circle.maxY - CIRCLE_SIZE) {
-        circle.dy *= -1;
-      }
+    if (circle.x <= circle.minX + CIRCLE_SIZE || circle.x >= circle.maxX - CIRCLE_SIZE) {
+      circle.dx *= -1;
     }
+    if (circle.y <= circle.minY + CIRCLE_SIZE || circle.y >= circle.maxY - CIRCLE_SIZE) {
+      circle.dy *= -1;
+    }
+  }
 }
 
 function loadLevel(index) {
