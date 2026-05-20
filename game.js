@@ -212,7 +212,7 @@ const levels = [
     coinsCollected: 0
   },
 
-    { //level six
+  { //level six
     start: {x: 0, y: 0, w: 30, h: 30},
     end: {x: 0, y: 180, w: 30, h: 60},
     circles: [
@@ -237,6 +237,62 @@ const levels = [
     ],
     areaW: 360,
     areaH: 240,
+    color: "#b4b5fe",
+    coinsCollected: 0
+  },
+
+  { //level seven
+    start: {x: 450, y: 210, w: 60, h: 60},
+    end: {x: 0, y: 0, w: 60, h: 60},
+    circles: [
+      { x: 165, y: 255, size: 9, dx: 0, dy: 3, minY: 0, maxY: 270, color:"#0000FF"},
+      { x: 195, y: 255, size: 9, dx: 0, dy: 1, minY: 0, maxY: 270, color:"#0000FF"},
+      { x: 225, y: 255, size: 9, dx: 0, dy: 0.5, minY: 0, maxY: 270, color:"#0000FF"},
+      { x: 255, y: 255, size: 9, dx: 0, dy: 3, minY: 0, maxY: 270, color:"#0000FF"},
+      { x: 285, y: 255, size: 9, dx: 0, dy: 1, minY: 0, maxY: 270, color:"#0000FF"},
+      { x: 315, y: 255, size: 9, dx: 0, dy: 0.5, minY: 0, maxY: 270, color:"#0000FF"},
+
+      { x: 15, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 45, y: 255, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 45, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 45, y: 195, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 45, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 45, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 45, y: 255, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 75, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 105, y: 105, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 105, y: 135, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 105, y: 165, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 105, y: 195, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 105, y: 225, size: 9, dx: 0, dy: 0, color:"#4b4b4b"},
+
+ 
+
+
+      { x: 375, y: 15, size: 9, dx: 0, dy: 0.75, minY: 0, maxY: 90, color:"#0000FF"},
+      { x: 375, y: 95, size: 9, dx: 0, dy: 0.75, minY: 80, maxY: 170, color:"#0000FF"},
+      { x: 375, y: 45, size: 9, dx: 0.75, dy: 0, minX: 360, maxX: 510, color:"#0000FF"},
+      { x: 495, y: 165, size: 9, dx: 0.5, dy: 1, minX: 390, maxX: 510, minY: 60, maxY: 180, color:"#0000FF"},
+      
+    ],
+    coins: [
+      { x: 15, y: 255, size: 9, collected: false},
+      { x: 495, y: 15, size: 9, collected: false},
+      { x: 405, y: 15, size: 9, collected: false}
+    ],
+    map: [
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0],
+      [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    ],
+    areaW: 510,
+    areaH: 270,
     color: "#b4b5fe",
     coinsCollected: 0
   },
@@ -487,5 +543,5 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
-loadLevel(5);
+loadLevel(6);
 loop();
