@@ -486,6 +486,7 @@ function update() {
           completeSound.play();
           coinsCollected = 0;
           loadLevel(currentLevelIndex + 1);
+          return;
     }
 
     for (let circle of level.circles) {
@@ -564,7 +565,7 @@ function loadLevel(index) {
     x: level.start.x + level.start.w / 2 - 10,
     y: level.start.y + level.start.h / 2 - 10,
     dead: false,
-    fade: 1.0
+    fade: 1.0,
   }
 
   W = level.map[0].length * TILE;
