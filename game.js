@@ -27,10 +27,10 @@ const levels = [
     start: {x: 0, y: 30, w: 90, h: 60},
     end: {x: 450, y: 30, w: 90, h: 60},
     circles: [
-    { x: 135, y: 105, speed: 1.5, path: [{x:135, y:15},{x:135, y:105}], pathIndex: 0, color:"#0000FF"},
-    { x: 225, y: 105, speed: 1.5, path: [{x:225, y:15},{x:225, y:105}], pathIndex: 0, color:"#0000FF"},
-    { x: 315, y: 105, speed: 1.5, path: [{x:315, y:15},{x:315, y:105}], pathIndex: 0, color:"#0000FF"},
-    { x: 405, y: 105, speed: 1.5, path: [{x:405, y:15},{x:405, y:105}], pathIndex: 0, color:"#0000FF"},
+    { x: 135, y: 105, speed: 1, path: [{x:135, y:15},{x:135, y:105}], pathIndex: 0, color:"#0000FF"},
+    { x: 225, y: 105, speed: 1, path: [{x:225, y:15},{x:225, y:105}], pathIndex: 0, color:"#0000FF"},
+    { x: 315, y: 105, speed: 1, path: [{x:315, y:15},{x:315, y:105}], pathIndex: 0, color:"#0000FF"},
+    { x: 405, y: 105, speed: 1, path: [{x:405, y:15},{x:405, y:105}], pathIndex: 0, color:"#0000FF"},
     ],
     map: [
       [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
@@ -204,9 +204,9 @@ const levels = [
       { x: 105, y: 165, speed: 0.5, path: [{x:105, y:165},{x:105, y:225},{x:45, y:225},{x:45, y:165}], pathIndex: 0, color:"#0000FF"},
       { x: 45, y: 225, speed: 0.5, path: [{x:45, y:225},{x:45, y:165},{x:105, y:165},{x:105, y:225}], pathIndex: 0, color:"#0000FF"},
     ],
-    coins: [{ x: 45, y: 15, collected:false},
-            { x: 15, y: 165, collected:false},
-            { x: 135, y: 165, collected:false}
+    coins: [
+      { x: 15, y: 165, collected:false},
+      { x: 135, y: 165, collected:false}
     ],
     map: [
       [0, 1, 0, 0, 0],
@@ -293,6 +293,52 @@ const levels = [
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    ],
+    color: "#b4b5fe"
+  },
+
+  { //level nine
+    start: {x: 120, y: 210, w: 30, h: 30},
+    end: {x: 120, y: 210, w: 30, h: 30},
+    circles: [
+      { x: 45, y: 315, speed: 0.5, path: [{x:45, y:15},{x:45, y:435}], pathIndex: 0, color:"#0000FF"},
+      { x: 75, y: 315, speed: 0.5, path: [{x:75, y:15},{x:75, y:435}], pathIndex: 0, color:"#0000FF"},
+      { x: 105, y: 315, speed: 0.5, path: [{x:105, y:15},{x:105, y:435}], pathIndex: 0, color:"#0000FF"},
+
+      { x: 105, y: 285, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 75, y: 285, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 45, y: 345, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 75, y: 345, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 105, y: 405, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 75, y: 405, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+
+      { x: 105, y: 45, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 75, y: 45, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 45, y: 105, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 75, y: 105, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 105, y: 165, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 75, y: 165, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+    ],
+    coins: [
+      { x: 75, y: 15, collected:false},
+      { x: 75, y: 435, collected:false}
+    ],
+    map: [
+      [0, 1, 1, 1, 0],
+      [0, 1, 1, 1, 0],
+      [0, 1, 1, 1, 0],
+      [0, 1, 1, 1, 0],
+      [0, 1, 1, 1, 0],
+      [0, 1, 1, 1, 0],
+      [0, 1, 1, 1, 0],
+      [0, 1, 1, 1, 1],
+      [0, 1, 1, 1, 0],
+      [0, 1, 1, 1, 0],
+      [0, 1, 1, 1, 0],
+      [0, 1, 1, 1, 0],
+      [0, 1, 1, 1, 0],
+      [0, 1, 1, 1, 0],
+      [0, 1, 1, 1, 0]
     ],
     color: "#b4b5fe"
   },
