@@ -27,10 +27,10 @@ const levels = [
     start: {x: 0, y: 30, w: 90, h: 60},
     end: {x: 450, y: 30, w: 90, h: 60},
     circles: [
-    { x: 135, y: 75, dx: 0, dy: 1.5, minY: 0, maxY: 120, color:"#0000FF"},
-    { x: 225, y: 75, dx: 0, dy: 1.5, minY: 0, maxY: 120, color:"#0000FF"},
-    { x: 315, y: 75, dx: 0, dy: 1.5, minY: 0, maxY: 120, color:"#0000FF"},
-    { x: 405, y: 75, dx: 0, dy: 1.5, minY: 0, maxY: 120, color:"#0000FF"},
+    { x: 135, y: 105, speed: 1.5, path: [{x:135, y:15},{x:135, y:105}], pathIndex: 0, color:"#0000FF"},
+    { x: 225, y: 105, speed: 1.5, path: [{x:225, y:15},{x:225, y:105}], pathIndex: 0, color:"#0000FF"},
+    { x: 315, y: 105, speed: 1.5, path: [{x:315, y:15},{x:315, y:105}], pathIndex: 0, color:"#0000FF"},
+    { x: 405, y: 105, speed: 1.5, path: [{x:405, y:15},{x:405, y:105}], pathIndex: 0, color:"#0000FF"},
     ],
     map: [
       [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
@@ -46,10 +46,10 @@ const levels = [
     start: {x: 0, y: 150, w: 60, h: 60},
     end: {x: 450, y: 0, w: 60, h: 60},
     circles: [
-    { x: 75, y: 135, dx: 2, dy: 0, minX: 60, maxX: 450, color:"#0000FF"},
-    { x: 75, y: 15, dx: 0, dy: 1.5, minY: 0, maxY: 210, color:"#0000FF"},
-    { x: 315, y: 15, dx: 0, dy: 0.5, minY: 0, maxY: 120, color:"#0000FF"},
-    { x: 405, y: 105, dx: 0, dy: -0.5, minY: 0, maxY: 120, color:"#0000FF"},
+    { x: 75, y: 135, speed: 2, path: [{x:75, y:135},{x:435, y:135}], pathIndex: 0, color:"#0000FF"},
+    { x: 75, y: 15, speed: 1.5, path: [{x:75, y:15},{x:75, y:195}], pathIndex: 0, color:"#0000FF"},
+    { x: 315, y: 15, speed: 0.5, path: [{x:315, y:15},{x:315, y:105}], pathIndex: 0, color:"#0000FF"},
+    { x: 405, y: 105, speed: 0.5, path: [{x:405, y:15},{x:405, y:105}], pathIndex: 0, color:"#0000FF"},
     ],
     map: [
       [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -67,81 +67,17 @@ const levels = [
   },
 
   { //level three
-    start: {x: 0, y: 0, w: 90, h: 30},
-    end: {x: 210, y: 240, w: 90, h: 60},
-    circles: [
-      { x: 15, y: 45, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 45, y: 45, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 75, y: 45, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 105, y: 45, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 135, y: 45, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 165, y: 45, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 195, y: 45, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 225, y: 45, dx: 0, dy: 0, color:"#4b4b4b"},
-
-      { x: 285, y: 105, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 255, y: 105, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 225, y: 105, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 195, y: 105, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 165, y: 105, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 135, y: 105, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 105, y: 105, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 75, y: 105, dx: 0, dy: 0, color:"#4b4b4b"},
-
-      { x: 15, y: 165, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 45, y: 165, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 75, y: 165, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 105, y: 165, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 135, y: 165, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 165, y: 165, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 195, y: 165, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 225, y: 165, dx: 0, dy: 0, color:"#4b4b4b"},
-
-      { x: 285, y: 225, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 255, y: 225, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 225, y: 225, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 195, y: 225, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 165, y: 225, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 135, y: 225, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 105, y: 225, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 75, y: 225, dx: 0, dy: 0, color:"#4b4b4b"},
-
-      { x: 75, y: 255, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 135, y: 285, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 195, y: 255, dx: 0, dy: 0, color:"#4b4b4b"},
-
-      { x: 15, y: 285, dx: -1, dy: 1, minX: 0, maxX: 300, minY: 0, maxY: 300, color:"#0000ff"},
-      { x: 150, y: 285, dx: 0, dy: 1, minY: 0, maxY: 300, color:"#0000ff"}
-    ],
-    map: [
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-    ],
-    coins: [],
-    color: "#b4b5fe"
-  },
-
-
-  { //level four
     start: {x: 0, y: 30, w: 60, h: 120},
     end: {x: 570, y: 30, w: 60, h: 120},
     circles: [
-      { x: 135, y: 45, dx: 0, dy: 0.5, minY: 0, maxY: 90, color:"#0000FF"},
-      { x: 225, y: 135, dx: 1, dy: 0, minX: 150, maxX: 300, color:"#0000FF"},
-      { x: 225, y: 135, dx: 0, dy: -0.5, minY: 90, maxY: 180, color:"#0000FF"},
-      { x: 315, y: 45, dx: -1.5, dy: 0, minX: 240, maxX: 390, color:"#0000FF"},
-      { x: 315, y: 45, dx: 0, dy: 0.5, minY: 0, maxY: 90, color:"#0000FF"},
-      { x: 405, y: 135, dx: -1, dy: 0, minX: 330, maxX: 480, color:"#0000FF"},
-      { x: 405, y: 135, dx: 0, dy: -0.5, minY: 90, maxY: 180, color:"#0000FF"},
-      { x: 495, y: 45, dx: 0, dy: 0.5, minY: 0, maxY: 90, color:"#0000FF"},
+      { x: 135, y: 45, speed: 0.5, path: [{x:135, y:15},{x:135, y:75}], pathIndex: 0, color:"#0000FF"},
+      { x: 225, y: 135, speed: 1, path: [{x:165, y:135},{x:285, y:135}], pathIndex: 0, color:"#0000FF"},
+      { x: 225, y: 135, speed: 0.5, path: [{x:225, y:165},{x:225, y:105}], pathIndex: 0, color:"#0000FF"},
+      { x: 315, y: 45, speed: 1.5, path: [{x:255, y:45},{x:375, y:45}], pathIndex: 0, color:"#0000FF"},
+      { x: 315, y: 45, speed: 0.5, path: [{x:315, y:15},{x:315, y:75}], pathIndex: 0, color:"#0000FF"},
+      { x: 405, y: 135, speed: 1, path: [{x:465, y:135},{x:345, y:135}], pathIndex: 0, color:"#0000FF"},
+      { x: 405, y: 135, speed: 0.5, path: [{x:405, y:165},{x:405, y:105}], pathIndex: 0, color:"#0000FF"},
+      { x: 495, y: 45, speed: 0.5, path: [{x:495, y:15},{x:495, y:75}], pathIndex: 0, color:"#0000FF"},
     ],
     coins: [
       { x: 165, y: 165, collected: false},
@@ -163,21 +99,85 @@ const levels = [
     color: "#b4b5fe"
   },
 
+
+  { //level four
+    start: {x: 0, y: 0, w: 90, h: 30},
+    end: {x: 210, y: 240, w: 90, h: 60},
+    circles: [
+      { x: 15, y: 45, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 45, y: 45, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 75, y: 45, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 105, y: 45, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 135, y: 45, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 165, y: 45, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 195, y: 45, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 225, y: 45, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+
+      { x: 285, y: 105, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 255, y: 105, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 225, y: 105, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 195, y: 105, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 165, y: 105, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 135, y: 105, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 105, y: 105, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 75, y: 105, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+
+      { x: 15, y: 165, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 45, y: 165, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 75, y: 165, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 105, y: 165, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 135, y: 165, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 165, y: 165, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 195, y: 165, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 225, y: 165, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+
+      { x: 285, y: 225, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 255, y: 225, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 225, y: 225, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 195, y: 225, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 165, y: 225, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 135, y: 225, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 105, y: 225, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 75, y: 225, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+
+      { x: 75, y: 255, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 135, y: 285, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 195, y: 255, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+
+      { x: 15, y: 285, speed: 1.5, path: [{x:0, y:305},{x:300, y:0}], pathIndex: 0, color:"#0000ff"},
+      { x: 150, y: 285, speed: 1, path: [{x:150, y:300},{x:150, y:15}], pathIndex: 0, color:"#0000ff"}
+    ],
+    map: [
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    ],
+    coins: [],
+    color: "#b4b5fe"
+  },
+
   { //level five
     start: {x: 0, y: 0, w: 60, h: 60},
     end: {x: 150, y: 150, w: 60, h: 60},
     circles: [
-      { x: 135, y: 75, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 195, y: 75, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 135, y: 75, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 195, y: 75, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
 
-      { x: 75, y: 135, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 75, y: 195, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 75, y: 135, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 75, y: 195, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
 
-      { x: 75, y: 15, dx: 0, dy: 2.5, minY: 0, maxY: 210, color:"#0000FF"},
-      { x: 75, y: 15, dx: 0, dy: 0.5, minY: 0, maxY: 210, color:"#0000FF"},
+      { x: 75, y: 15, speed: 2.5, path: [{x:75, y:15},{x:75, y:195}], pathIndex: 0, color:"#0000FF"},
+      { x: 75, y: 15, speed: 0.5, path: [{x:75, y:15},{x:75, y:195}], pathIndex: 0, color:"#0000FF"},
 
-      { x: 75, y: 75, dx: 2.5, dy: 0, minX: 0, maxX: 210, color:"#0000FF"},
-      { x: 75, y: 75, dx: 0.5, dy: 0, minX: 0, maxX: 210, color:"#0000FF"}
+      { x: 75, y: 75, speed: 0.5, path: [{x:15, y:75},{x:195, y:75}], pathIndex: 0, color:"#0000FF"},
+      { x: 75, y: 75, speed: 2.5, path: [{x:15, y:75},{x:195, y:75}], pathIndex: 0, color:"#0000FF"}
     ],
     coins: [
       { x: 15, y: 195, collected: false},
@@ -195,14 +195,42 @@ const levels = [
     color: "#b4b5fe"
   },
 
+
   { //level six
+    start: {x: 120, y: 30, w: 30, h: 30},
+    end: {x: 60, y: 270, w: 30, h: 30},
+    circles: [
+      { x: 45, y: 105, speed: 1.6, path: [{x:45, y:45},{x:105, y:45},{x:105, y:105},{x:45, y:105}], pathIndex: 0, color:"#0000FF"},
+      { x: 105, y: 165, speed: 0.5, path: [{x:105, y:165},{x:105, y:225},{x:45, y:225},{x:45, y:165}], pathIndex: 0, color:"#0000FF"},
+      { x: 45, y: 225, speed: 0.5, path: [{x:45, y:225},{x:45, y:165},{x:105, y:165},{x:105, y:225}], pathIndex: 0, color:"#0000FF"},
+    ],
+    coins: [{ x: 45, y: 15, collected:false},
+            { x: 15, y: 165, collected:false},
+            { x: 135, y: 165, collected:false}
+    ],
+    map: [
+      [0, 1, 0, 0, 0],
+      [0, 1, 1, 1, 1],
+      [0, 1, 0, 1, 0],
+      [0, 1, 1, 1, 0],
+      [0, 0, 1, 0, 0],
+      [1, 1, 1, 1, 1],
+      [0, 1, 0, 1, 0],
+      [0, 1, 1, 1, 0],
+      [0, 0, 1, 0, 0],
+      [0, 0, 1, 0, 0]
+    ],
+    color: "#b4b5fe"
+  },
+
+  { //level seven
     start: {x: 0, y: 0, w: 30, h: 30},
     end: {x: 0, y: 180, w: 30, h: 60},
     circles: [
-      { x: 165, y: 45, dx: 1.7, dy: 0, minX: 0, maxX: 240, color:"#0000FF"},
-      { x: 165, y: 135, dx: 0.5, dy: 0, minX: 150, maxX: 300, color:"#0000FF"},
-      { x: 345, y: 15, dx: 0, dy: 0.95, minY: 0, maxY: 240, color:"#0000FF"},
-      { x: 75, y: 195, dx: -1.8, dy: 0, minX: 60, maxX: 300, color:"#0000FF"},
+      { x: 165, y: 45, speed: 1.7, path: [{x:15, y:45},{x:225, y:45}], pathIndex: 0, color:"#0000FF"},
+      { x: 165, y: 135, speed: 0.5, path: [{x:165, y:135},{x:285, y:135}], pathIndex: 0, color:"#0000FF"},
+      { x: 345, y: 15, speed: 0.92, path: [{x:345, y:15},{x:345, y:225}], pathIndex: 0, color:"#0000FF"},
+      { x: 75, y: 195, speed: 1.8, path: [{x:75, y:195},{x:285, y:195}], pathIndex: 0, color:"#0000FF"},
 
     ],
     coins: [
@@ -221,34 +249,34 @@ const levels = [
     color: "#b4b5fe"
   },
 
-  { //level seven
+  { //level eight
     start: {x: 450, y: 210, w: 60, h: 60},
     end: {x: 0, y: 0, w: 60, h: 60},
     circles: [
-      { x: 165, y: 255, dx: 0, dy: 3, minY: 0, maxY: 270, color:"#0000FF"},
-      { x: 195, y: 255, dx: 0, dy: 1, minY: 0, maxY: 270, color:"#0000FF"},
-      { x: 225, y: 255, dx: 0, dy: 0.5, minY: 0, maxY: 270, color:"#0000FF"},
-      { x: 255, y: 255, dx: 0, dy: 3, minY: 0, maxY: 270, color:"#0000FF"},
-      { x: 285, y: 255, dx: 0, dy: 1, minY: 0, maxY: 270, color:"#0000FF"},
-      { x: 315, y: 255, dx: 0, dy: 0.5, minY: 0, maxY: 270, color:"#0000FF"},
+      { x: 165, y: 255, speed: 3, path: [{x:165, y:10},{x:165, y:260}], pathIndex: 0, color:"#0000FF"},
+      { x: 195, y: 255, speed: 1, path: [{x:195, y:10},{x:195, y:260}], pathIndex: 0, color:"#0000FF"},
+      { x: 225, y: 255, speed: 0.5, path: [{x:225, y:10},{x:225, y:260}], pathIndex: 0, color:"#0000FF"},
+      { x: 255, y: 255, speed: 3, path: [{x:255, y:10},{x:255, y:260}], pathIndex: 0, color:"#0000FF"},
+      { x: 285, y: 255, speed: 1, path: [{x:285, y:10},{x:285, y:260}], pathIndex: 0, color:"#0000FF"},
+      { x: 315, y: 255, speed: 0.5, path: [{x:315, y:10},{x:315, y:260}], pathIndex: 0, color:"#0000FF"},
 
-      { x: 15, y: 105, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 45, y: 225, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 45, y: 195, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 45, y: 165, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 45, y: 105, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 45, y: 255, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 75, y: 105, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 105, y: 105, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 105, y: 135, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 105, y: 165, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 105, y: 195, dx: 0, dy: 0, color:"#4b4b4b"},
-      { x: 105, y: 225, dx: 0, dy: 0, color:"#4b4b4b"},
+      { x: 15, y: 105, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 45, y: 225, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 45, y: 195, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 45, y: 165, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 45, y: 105, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 45, y: 255, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 75, y: 105, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 105, y: 105, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 105, y: 135, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 105, y: 165, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 105, y: 195, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
+      { x: 105, y: 225, speed: 0, path: [], pathIndex: 0, color:"#4b4b4b"},
 
-      { x: 375, y: 15, dx: 0, dy: 0.75, minY: 0, maxY: 90, color:"#0000FF"},
-      { x: 375, y: 95, dx: 0, dy: 0.75, minY: 80, maxY: 170, color:"#0000FF"},
-      { x: 375, y: 45, dx: 0.75, dy: 0, minX: 360, maxX: 510, color:"#0000FF"},
-      { x: 495, y: 165, dx: 0.5, dy: 1, minX: 390, maxX: 510, minY: 60, maxY: 180, color:"#0000FF"},
+      { x: 375, y: 15, speed: 0.5, path: [{x:375, y:15},{x:375, y:75}], pathIndex: 0, color:"#0000FF"},
+      { x: 375, y: 95, speed: 0.5, path: [{x:375, y:155}, {x:375, y:95}], pathIndex: 0, color:"#0000FF"},
+      { x: 375, y: 45, speed: 0.75, path: [{x:375, y:45},{x:495, y:45}], pathIndex: 0, color:"#0000FF"},
+      { x: 495, y: 165, speed: 1.2, path: [{x:495, y:165},{x:450, y:75},{x:405,y:165},{x:450, y:75}], pathIndex: 0, color:"#0000FF"},
     ],
     coins: [
       { x: 15, y: 255, collected: false},
@@ -448,14 +476,30 @@ function update() {
   }
 
   for (let circle of level.circles) {
-    circle.x += circle.dx;
-    circle.y += circle.dy;
+    if (!circle.path || circle.path.length === 0) {continue;}
 
-    if (circle.dx != 0 && (circle.x <= circle.minX + CIRCLE_SIZE || circle.x >= circle.maxX - CIRCLE_SIZE)) {
-      circle.dx *= -1;
-    }
-    if (circle.dy != 0 && (circle.y <= circle.minY + CIRCLE_SIZE || circle.y >= circle.maxY - CIRCLE_SIZE)) {
-      circle.dy *= -1;
+    const targetPath = circle.path[circle.pathIndex];
+    const dx = targetPath.x - circle.x;
+    const dy = targetPath.y - circle.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (dist <= circle.speed) {
+      const remainingDist = circle.speed - dist;
+      circle.x = targetPath.x;
+      circle.y = targetPath.y;
+      circle.pathIndex = (circle.pathIndex + 1) % circle.path.length;
+
+      const next = circle.path[circle.pathIndex];
+      const ndx = next.x - circle.x;
+      const ndy = next.y - circle.y;
+      const ndist = Math.sqrt(ndx * ndx + ndy * ndy);
+      if (ndist > 0) {
+        circle.x += (ndx / ndist) * remainingDist;
+        circle.y += (ndy / ndist) * remainingDist;
+      }
+    } else {
+      circle.x += (dx / dist) * circle.speed;
+      circle.y += (dy / dist) * circle.speed;
     }
   }
 }
