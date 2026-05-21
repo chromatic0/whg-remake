@@ -205,6 +205,7 @@ const levels = [
       { x: 45, y: 225, speed: 0.5, path: [{x:45, y:225},{x:45, y:165},{x:105, y:165},{x:105, y:225}], pathIndex: 0, color:"#0000FF"},
     ],
     coins: [
+      { x: 45, y: 15, collected:false},
       { x: 15, y: 165, collected:false},
       { x: 135, y: 165, collected:false}
     ],
