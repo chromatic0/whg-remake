@@ -464,6 +464,11 @@ function squareHitsWall(x, y) {
   );
 }
 
+function playSound(audio) {
+  const clone = audio.cloneNode();
+  clone.play();
+}
+
 function update() {
   if (!square.dead) {
     const prevX = square.x;
@@ -483,7 +488,7 @@ function update() {
     if (coinsCollected === level.coins.length
         && squareHitBoxX <= level.end.x + level.end.w + 10 && squareHitBoxX >= level.end.x - 10
         && squareHitBoxY <= level.end.y + level.end.h + 10 && squareHitBoxY >= level.end.y - 10) {
-          completeSound.play();
+          playSound(completeSound);
           coinsCollected = 0;
           loadLevel(currentLevelIndex + 1);
           return;
@@ -493,7 +498,7 @@ function update() {
       if (!square.dead
         && squareHitBoxX <= circle.x + CIRCLE_SIZE*2 && squareHitBoxX >= circle.x - CIRCLE_SIZE*2
         && squareHitBoxY <= circle.y + CIRCLE_SIZE*2 && squareHitBoxY >= circle.y - CIRCLE_SIZE*2) {
-          deathSound.play();
+          playSound(deathSound);
           square.dead = true;
           deaths++;
       }
@@ -502,7 +507,7 @@ function update() {
     for (let coin of level.coins) {
       if (!coin.collected && squareHitBoxX <= coin.x + COIN_SIZE*2 && squareHitBoxX >= coin.x - COIN_SIZE*2
         && squareHitBoxY <= coin.y + COIN_SIZE*2 && squareHitBoxY >= coin.y - COIN_SIZE*2) {
-          coinSound.play();
+          playSound(coinSound);
           coin.collected = true;
           coinsCollected++;
       }
