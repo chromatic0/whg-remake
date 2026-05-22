@@ -1,6 +1,7 @@
 const deathSound = new Audio('sound/death.mp3');
 const completeSound = new Audio('sound/complete.mp3');
 const coinSound = new Audio('sound/coin.mp3');
+const keySound = new Audio('sound/key.mp3');
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
@@ -11,6 +12,7 @@ const HALF_X_OFFSET = X_OFFSET/2;
 const TILE = 30;
 const CIRCLE_SIZE = 9;
 const COIN_SIZE = 9;
+const KEY_SIZE = 9;
 const SQUARE_SIZE = 20;
 
 let W = 0;
@@ -32,13 +34,14 @@ const levels = [
     { x: 315, y: 105, speed: 1, path: [{x:315, y:15},{x:315, y:105}], pathIndex: 0, color:"#0000FF"},
     { x: 405, y: 105, speed: 1, path: [{x:405, y:15},{x:405, y:105}], pathIndex: 0, color:"#0000FF"},
     ],
+    coins: [],
+    keys: [],
     map: [
       [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
-    ],
-    coins: [],
+    ], 
     color: "#b4b5fe"
   },
 
@@ -51,6 +54,10 @@ const levels = [
     { x: 315, y: 15, speed: 0.5, path: [{x:315, y:15},{x:315, y:105}], pathIndex: 0, color:"#0000FF"},
     { x: 405, y: 105, speed: 0.5, path: [{x:405, y:15},{x:405, y:105}], pathIndex: 0, color:"#0000FF"},
     ],
+    coins: [
+      { x: 435, y: 195, collected: false}
+    ],
+    keys: [],
     map: [
       [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -59,9 +66,6 @@ const levels = [
       [0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0],
       [1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0],
       [1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0],
-    ],
-    coins: [
-      { x: 435, y: 195, collected: false}
     ],
     color: "#b4b5fe"
   },
@@ -86,8 +90,8 @@ const levels = [
       { x: 375, y: 15, collected: false},
       { x: 345, y: 165, collected: false},
       { x: 465, y: 165, collected: false},
-
     ],
+    keys: [],
     map: [
       [0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0],
       [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1],
@@ -147,6 +151,8 @@ const levels = [
       { x: 15, y: 285, speed: 1.5, path: [{x:0, y:305},{x:300, y:0}], pathIndex: 0, color:"#0000ff"},
       { x: 150, y: 285, speed: 1, path: [{x:150, y:300},{x:150, y:15}], pathIndex: 0, color:"#0000ff"}
     ],
+    coins: [],
+    keys: [],
     map: [
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -159,7 +165,6 @@ const levels = [
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ],
-    coins: [],
     color: "#b4b5fe"
   },
 
@@ -183,6 +188,7 @@ const levels = [
       { x: 15, y: 195, collected: false},
       { x: 195, y: 15, collected: false}
     ],
+    keys: [],
     map: [
       [1, 1, 1, 1, 1, 1, 1],
       [1, 1, 1, 1, 1, 1, 1],
@@ -209,6 +215,7 @@ const levels = [
       { x: 15, y: 165, collected:false},
       { x: 135, y: 165, collected:false}
     ],
+    keys: [],
     map: [
       [0, 1, 0, 0, 0],
       [0, 1, 1, 1, 1],
@@ -237,6 +244,7 @@ const levels = [
     coins: [
       { x: 165, y: 135, collected: false}
     ],
+    keys: [],
     map: [
       [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
       [1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1],
@@ -284,6 +292,7 @@ const levels = [
       { x: 495, y: 15, collected: false},
       { x: 405, y: 15, collected: false}
     ],
+    keys: [],
     map: [
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1],
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0],
@@ -324,6 +333,7 @@ const levels = [
       { x: 75, y: 15, collected:false},
       { x: 75, y: 435, collected:false}
     ],
+    keys: [],
     map: [
       [0, 1, 1, 1, 0],
       [0, 1, 1, 1, 0],
@@ -344,7 +354,7 @@ const levels = [
     color: "#b4b5fe"
   },
 
-    { //level ten
+  { //level ten
     start: {x: 0, y: 0, w: 60, h: 60},
     end: {x: 510, y: 150, w: 60, h: 60},
     circles: [
@@ -363,6 +373,7 @@ const levels = [
   
       { x: 345, y: 105, collected:false},
     ],
+    keys: [],
     map: [
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
@@ -371,6 +382,65 @@ const levels = [
       [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
       [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    ],
+    color: "#d4b4fe"
+  },
+
+    { //level eleven
+    start: {x: 210, y: 450, w: 60, h: 60},
+    end: {x: 120, y: 0, w: 30, h: 30},
+    circles: [
+      { x: 255, y: 345, speed: 0.5, path: [{x:255, y:345},{x:195, y:345},{x:195, y:405},{x:255, y:405}], pathIndex: 0, color:"#6f00ff"},
+      { x: 135, y: 405, speed: 0.5, path: [{x:135, y:405},{x:195, y:405},{x:195, y:345},{x:135, y:345}], pathIndex: 0, color:"#6f00ff"},
+      { x: 135, y: 345, speed: 0.5, path: [{x:135, y:345},{x:75, y:345},{x:75, y:405},{x:135, y:405}], pathIndex: 0, color:"#6f00ff"},
+      { x: 15, y: 405, speed: 0.5, path: [{x:15, y:405},{x:75, y:405},{x:75, y:345},{x:15, y:345}], pathIndex: 0, color:"#6f00ff"},
+      { x: 15, y: 345, speed: 0.5, path: [{x:15, y:345},{x:255, y:345},{x:255, y:405},{x:15, y:405}], pathIndex: 0, color:"#6f00ff"},
+
+      { x: 45, y: 45, speed: 0.7, path: [{x:45, y:45},{x:45, y:285}], pathIndex: 0, color:"#6f00ff"},
+      { x: 105, y: 45, speed: 0.7, path: [{x:105, y:45},{x:105, y:285}], pathIndex: 0, color:"#6f00ff"},
+      { x: 165, y: 45, speed: 0.7, path: [{x:165, y:45},{x:165, y:285}], pathIndex: 0, color:"#6f00ff"},
+      { x: 225, y: 45, speed: 0.7, path: [{x:225, y:45},{x:225, y:285}], pathIndex: 0, color:"#6f00ff"},
+
+      { x: 15, y: 285, speed: 0.7, path: [{x:15, y:45},{x:15, y:285}], pathIndex: 0, color:"#6f00ff"},
+      { x: 75, y: 285, speed: 0.7, path: [{x:75, y:45},{x:75, y:285}], pathIndex: 0, color:"#6f00ff"},
+      { x: 135, y: 285, speed: 0.7, path: [{x:135, y:45},{x:135, y:285}], pathIndex: 0, color:"#6f00ff"},
+      { x: 195, y: 285, speed: 0.7, path: [{x:195, y:45},{x:195, y:285}], pathIndex: 0, color:"#6f00ff"},
+      { x: 255, y: 285, speed: 0.7, path: [{x:255, y:45},{x:255, y:285}], pathIndex: 0, color:"#6f00ff"},
+
+      { x: 15, y: 45, speed: 0.7, path: [{x:15, y:45},{x:255, y:45}], pathIndex: 0, color:"#6f00ff"},
+      { x: 15, y: 105, speed: 0.7, path: [{x:15, y:105},{x:255, y:105}], pathIndex: 0, color:"#6f00ff"},
+      { x: 15, y: 165, speed: 0.7, path: [{x:15, y:165},{x:255, y:165}], pathIndex: 0, color:"#6f00ff"},
+      { x: 15, y: 225, speed: 0.7, path: [{x:15, y:225},{x:255, y:225}], pathIndex: 0, color:"#6f00ff"},
+      { x: 15, y: 285, speed: 0.7, path: [{x:15, y:285},{x:255, y:285}], pathIndex: 0, color:"#6f00ff"},
+
+      { x: 255, y: 75, speed: 0.7, path: [{x:255, y:75},{x:15, y:75}], pathIndex: 0, color:"#6f00ff"},
+      { x: 255, y: 135, speed: 0.7, path: [{x:15, y:135},{x:255, y:135}], pathIndex: 0, color:"#6f00ff"},
+      { x: 255, y: 195, speed: 0.7, path: [{x:15, y:195},{x:255, y:195}], pathIndex: 0, color:"#6f00ff"},
+      { x: 255, y: 255, speed: 0.7, path: [{x:15, y:255},{x:255, y:255}], pathIndex: 0, color:"#6f00ff"},
+    ],
+    coins: [],
+    keys: [
+      {x: 15, y: 435, collected:false, unlocks: {x:4, y:10}}
+    ],
+    map: [
+      [0, 0, 0, 0, 1, 0, 0, 0, 0],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 0, 1, 0, 1, 0, 1, 0, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 0, 0, 0, 0, 0, 0, 1, 1],
+      [0, 0, 0, 0, 0, 0, 0, 1, 1],
+      [0, 0, 0, 0, 0, 0, 0, 1, 1],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0] 
     ],
     color: "#d4b4fe"
   },
@@ -468,6 +538,24 @@ function drawCoins() {
   }
 }
 
+function drawKeys() {
+  for (let key of level.keys) {
+    if (!key.collected) {
+      ctx.beginPath();
+      ctx.arc(key.x + HALF_X_OFFSET, key.y + Y_OFFSET, KEY_SIZE, 0, Math.PI * 2);
+      ctx.fillStyle = "black";
+      ctx.fill();
+      ctx.closePath();
+
+      ctx.beginPath();
+      ctx.arc(key.x + HALF_X_OFFSET, key.y + Y_OFFSET, KEY_SIZE - 4, 0, Math.PI * 2);
+      ctx.fillStyle = "#ffffff";
+      ctx.fill();
+      ctx.closePath();
+    }
+  }
+}
+
 function drawSquare() {
   ctx.fillStyle = `rgba(255, 0, 0, ${square.fade})`;
   ctx.fillRect(square.x + HALF_X_OFFSET, square.y + Y_OFFSET, SQUARE_SIZE, SQUARE_SIZE);
@@ -544,11 +632,27 @@ function update() {
       }
     }
 
+    for (let key of level.keys) {
+      if (!key.collected && squareHitBoxX <= key.x + KEY_SIZE*2 && squareHitBoxX >= key.x - KEY_SIZE*2
+        && squareHitBoxY <= key.y + KEY_SIZE*2 && squareHitBoxY >= key.y - KEY_SIZE*2) {
+          playSound(keySound);
+          key.collected = true;
+          level.map[key.unlocks.y][key.unlocks.x] = 1;
+      }
+    }
+
   } else {
     square.fade -= 0.015;
     if (square.fade <= 0) {
       for (let coin of level.coins) {
         if (coin.collected) {coin.collected = false;}
+      }
+
+      for (let key of level.keys) {
+        if (key.collected) {
+          key.collected = false;
+          level.map[key.unlocks.y][key.unlocks.x] = 0;
+        }
       }
 
       coinsCollected = 0;
@@ -618,6 +722,7 @@ function loop() {
   drawBackground();
   drawStartEndPoints();
   drawCoins();
+  drawKeys();
   drawCircles();
   drawSquare();
   drawText();
