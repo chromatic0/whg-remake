@@ -368,9 +368,7 @@ const levels = [
     ],
     coins: [
       { x: 225, y: 105, collected:false},
-
       { x: 285, y: 105, collected:false},
-  
       { x: 345, y: 105, collected:false},
     ],
     keys: [],
@@ -386,7 +384,7 @@ const levels = [
     color: "#d4b4fe"
   },
 
-    { //level eleven
+  { //level eleven
     start: {x: 210, y: 450, w: 60, h: 60},
     end: {x: 120, y: 0, w: 30, h: 30},
     circles: [
@@ -441,6 +439,53 @@ const levels = [
       [0, 0, 0, 0, 0, 0, 0, 1, 1],
       [0, 0, 0, 0, 0, 0, 0, 1, 1],
       [0, 0, 0, 0, 0, 0, 0, 0, 0] 
+    ],
+    color: "#d4b4fe"
+  },
+
+  { //level twelve
+    start: {x: 0, y: 60, w: 60, h: 60},
+    end: {x: 540, y: 60, w: 60, h: 60},
+    circles: [
+      { x: 75, y: 15, speed: 0.4, path: [{x:75, y:15},{x:105, y:15},{x:105, y:45},{x:75, y:45}], pathIndex: 0, color:"#6f00ff"},
+      { x: 75, y: 75, speed: 0.4, path: [{x:75, y:75},{x:105, y:75},{x:105, y:105},{x:75, y:105}], pathIndex: 0, color:"#6f00ff"},
+      { x: 75, y: 135, speed: 0.4, path: [{x:75, y:135},{x:105, y:135},{x:105, y:165},{x:75, y:165}], pathIndex: 0, color:"#6f00ff"},
+      { x: 135, y: 15, speed: 0.4, path: [{x:135, y:15},{x:165, y:15},{x:165, y:45},{x:135, y:45}], pathIndex: 0, color:"#6f00ff"},
+      { x: 135, y: 75, speed: 0.4, path: [{x:135, y:75},{x:165, y:75},{x:165, y:105},{x:135, y:105}], pathIndex: 0, color:"#6f00ff"},
+      { x: 135, y: 135, speed: 0.4, path: [{x:135, y:135},{x:165, y:135},{x:165, y:165},{x:135, y:165}], pathIndex: 0, color:"#6f00ff"},
+
+      { x: 195, y: 135, speed: 0.4, path: [{x:195, y:135},{x:225, y:135},{x:225, y:165},{x:195, y:165}], pathIndex: 0, color:"#6f00ff"},
+     
+      { x: 255, y: 15, speed: 0.4, path: [{x:255, y:15},{x:285, y:15},{x:285, y:45},{x:255, y:45}], pathIndex: 0, color:"#6f00ff"},
+      { x: 255, y: 75, speed: 0.4, path: [{x:255, y:75},{x:285, y:75},{x:285, y:105},{x:255, y:105}], pathIndex: 0, color:"#6f00ff"},
+      { x: 255, y: 135, speed: 0.4, path: [{x:255, y:135},{x:285, y:135},{x:285, y:165},{x:255, y:165}], pathIndex: 0, color:"#6f00ff"},
+      { x: 315, y: 15, speed: 0.4, path: [{x:315, y:15},{x:345, y:15},{x:345, y:45},{x:315, y:45}], pathIndex: 0, color:"#6f00ff"},
+      { x: 315, y: 75, speed: 0.4, path: [{x:315, y:75},{x:345, y:75},{x:345, y:105},{x:315, y:105}], pathIndex: 0, color:"#6f00ff"},
+      { x: 315, y: 135, speed: 0.4, path: [{x:315, y:135},{x:345, y:135},{x:345, y:165},{x:315, y:165}], pathIndex: 0, color:"#6f00ff"},
+
+      { x: 375, y: 15, speed: 0.4, path: [{x:375, y:15},{x:405, y:15},{x:405, y:45},{x:375, y:45}], pathIndex: 0, color:"#6f00ff"},
+
+      { x: 435, y: 15, speed: 0.4, path: [{x:435, y:15},{x:465, y:15},{x:465, y:45},{x:435, y:45}], pathIndex: 0, color:"#6f00ff"},
+      { x: 435, y: 75, speed: 0.4, path: [{x:435, y:75},{x:465, y:75},{x:465, y:105},{x:435, y:105}], pathIndex: 0, color:"#6f00ff"},
+      { x: 435, y: 135, speed: 0.4, path: [{x:435, y:135},{x:465, y:135},{x:465, y:165},{x:435, y:165}], pathIndex: 0, color:"#6f00ff"},
+      { x: 495, y: 15, speed: 0.4, path: [{x:495, y:15},{x:525, y:15},{x:525, y:45},{x:495, y:45}], pathIndex: 0, color:"#6f00ff"},
+      { x: 495, y: 75, speed: 0.4, path: [{x:495, y:75},{x:525, y:75},{x:525, y:105},{x:495, y:105}], pathIndex: 0, color:"#6f00ff"},
+      { x: 495, y: 135, speed: 0.4, path: [{x:495, y:135},{x:525, y:135},{x:525, y:165},{x:495, y:165}], pathIndex: 0, color:"#6f00ff"},
+    ],
+    coins: [
+      { x: 165, y: 15, collected:false},
+      { x: 255, y: 15, collected:false},
+      { x: 345, y: 165, collected:false},
+      { x: 435, y: 165, collected:false},
+    ],
+    keys: [],
+    map: [
+      [0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+      [0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+      [1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1],
+      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0],
+      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0],
     ],
     color: "#d4b4fe"
   },
@@ -614,12 +659,14 @@ function update() {
     }
 
     for (let circle of level.circles) {
-      if (!square.dead
-        && squareHitBoxX <= circle.x + CIRCLE_SIZE*2 && squareHitBoxX >= circle.x - CIRCLE_SIZE*2
-        && squareHitBoxY <= circle.y + CIRCLE_SIZE*2 && squareHitBoxY >= circle.y - CIRCLE_SIZE*2) {
-          playSound(deathSound);
-          square.dead = true;
-          deaths++;
+      const dx = squareHitBoxX - circle.x;
+      const dy = squareHitBoxY - circle.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      
+      if (!square.dead && dist <= CIRCLE_SIZE * 2) {
+        playSound(deathSound);
+        square.dead = true;
+        deaths++;
       }
     }
     
